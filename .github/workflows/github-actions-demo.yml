@@ -1,0 +1,31 @@
+
+name: WSB
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-python-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Python version
+        run: python --version
+
+  run-pylint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Install Pylint
+        run: pip install pylint
+      - name: Run pylint
+        run: pylint app.py
